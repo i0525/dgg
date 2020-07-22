@@ -1,4 +1,4 @@
-package models
+package module
 
 import "time"
 
@@ -6,7 +6,6 @@ import "time"
 type BaseModel struct {
 	CreatedAt time.Time
 	UpdatedAt time.Time
-
 }
 
 //func (bm *BaseModel) BeforeSave() (err error) {
@@ -21,9 +20,6 @@ func (bm *BaseModel) BeforeUpdate() (err error) {
 	return
 }
 
-
-
 func (bm *BaseModel) AfterFind() (err error) {
-
 	return
 }

@@ -1,37 +1,35 @@
-package models
+package module
 
 import (
-	"time"
+	"encoding/json"
+	"errors"
+	"fmt"
 	"github.com/gomodule/redigo/redis"
 	"os"
 	"strconv"
-	"fmt"
-	"encoding/json"
-	"errors"
+	"time"
 )
 
-
 type Redis struct {
-	pool     *redis.Pool
+	pool *redis.Pool
 }
 
 var Dredis *Redis
 
-
 func InitRedis() {
 	Dredis = new(Redis)
-	RedisMax,_ :=strconv.Atoi(os.Getenv("RedisMax"))
-	RedisMaxActive,_:=strconv.Atoi(os.Getenv("RedisMaxActive"))
+	RedisMax, _ := strconv.Atoi(os.Getenv("RedisMax"))
+	RedisMaxActive, _ := strconv.Atoi(os.Getenv("RedisMaxActive"))
 	Dredis.pool = &redis.Pool{
 		MaxIdle:     RedisMax,
 		MaxActive:   RedisMaxActive,
 		IdleTimeout: time.Duration(120),
 		Dial: func() (redis.Conn, error) {
-			RedisDB,_ :=strconv.Atoi(os.Getenv("RedisDB"))
+			RedisDB, _ := strconv.Atoi(os.Getenv("RedisDB"))
 
 			return redis.Dial(
 				"tcp",
-				os.Getenv("RedisAddress"),//"127.0.0.1:6379"
+				os.Getenv("RedisAddress"), //"127.0.0.1:6379"
 				redis.DialReadTimeout(time.Duration(1000)*time.Millisecond),
 				redis.DialWriteTimeout(time.Duration(1000)*time.Millisecond),
 				redis.DialConnectTimeout(time.Duration(1000)*time.Millisecond),
@@ -42,7 +40,6 @@ func InitRedis() {
 		},
 	}
 }
-
 
 func Set(k, v string) {
 	c := Dredis.pool.Get()
@@ -63,7 +60,6 @@ func GetStringValue(k string) string {
 	}
 	return username
 }
-
 
 func SetKeyExpire(k string, ex int) {
 	c := Dredis.pool.Get()

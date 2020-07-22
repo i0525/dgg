@@ -1,23 +1,22 @@
-package models
+package module
 
 import (
-	"github.com/jinzhu/gorm"
-	"os"
-	"log"
-	"strconv"
 	"fmt"
-	_"github.com/jinzhu/gorm/dialects/mysql"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
+	"log"
+	"os"
+	"strconv"
 )
 
 const (
-	DRIVER_MY_SQL = "mysql"
+	DRIVER_MY_SQL      = "mysql"
 	DRIVER_POSTGRE_SQL = "postgres"
-	DRIVER_SQLITE3 = "sqlite3"
-	DRIVER_SQL_SERVER = "mssql"
+	DRIVER_SQLITE3     = "sqlite3"
+	DRIVER_SQL_SERVER  = "mssql"
 )
 
 var DB *gorm.DB
-
 
 // ConnectDB 连接数据库
 func ConnectDB() {
@@ -54,7 +53,7 @@ func ConnectDB() {
 			os.Getenv("DB_CHARSET"),
 		)
 	default:
-		log.Fatalf("models.ConnectDB driver err: %s", driver)
+		log.Fatalf("module.ConnectDB driver err: %s", driver)
 	}
 	maxConnections, _ := strconv.Atoi(os.Getenv("DB_MAX_CONNECTIONS"))
 	openConnections, _ := strconv.Atoi(os.Getenv("DB_MAX_OPEN_CONNECTIONS"))
@@ -67,7 +66,7 @@ func ConnectDB() {
 }
 
 // ConnectDbMySQL 初始化Mysql db
-func ConnectDbMySQL(host, port, database, user, pass , charset string) *gorm.DB {
+func ConnectDbMySQL(host, port, database, user, pass, charset string) *gorm.DB {
 	dns := fmt.Sprintf(
 		"%s:%s@tcp(%s:%s)/%s?charset=%s&parseTime=True&loc=Local",
 		user,
@@ -80,7 +79,7 @@ func ConnectDbMySQL(host, port, database, user, pass , charset string) *gorm.DB 
 
 	db, err := gorm.Open(DRIVER_MY_SQL, dns)
 	if err != nil {
-		log.Fatalf("models.InitDbMySQL err: %v", err)
+		log.Fatalf("module.InitDbMySQL err: %v", err)
 	}
 	db.SingularTable(true)
 	maxConnections, _ := strconv.Atoi(os.Getenv("DB_MAX_CONNECTIONS"))
@@ -103,7 +102,7 @@ func ConnectDbPostgreSQL(host, port, database, user, pass string) *gorm.DB {
 
 	db, err := gorm.Open(DRIVER_POSTGRE_SQL, dns)
 	if err != nil {
-		log.Fatalf("models.ConnectDbPostgreSQL err: %v", err)
+		log.Fatalf("module.ConnectDbPostgreSQL err: %v", err)
 	}
 	db.SingularTable(true)
 	return db
@@ -118,7 +117,7 @@ func ConnectDbSqlite3(host string) *gorm.DB {
 
 	db, err := gorm.Open(DRIVER_SQLITE3, dns)
 	if err != nil {
-		log.Fatalf("models.ConnectDbSqlite3 err: %v", err)
+		log.Fatalf("module.ConnectDbSqlite3 err: %v", err)
 	}
 	db.SingularTable(true)
 	return db
@@ -137,7 +136,7 @@ func ConnectDbSqlServer(host, port, database, user, pass string) *gorm.DB {
 
 	db, err := gorm.Open(DRIVER_SQL_SERVER, dns)
 	if err != nil {
-		log.Fatalf("models.ConnectDbSqlServer err: %v", err)
+		log.Fatalf("module.ConnectDbSqlServer err: %v", err)
 	}
 	db.SingularTable(true)
 	return db

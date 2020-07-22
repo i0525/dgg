@@ -1,11 +1,9 @@
 package model
 
-import "lidongheDemo/models"
-
 // UsersModel 用户模型
 type AdminsModel struct {
-	models.BaseModel
-	Id uint `gorm:"primary_key" json:"id"`
+	//module.BaseModel
+	Id   uint `gorm:"primary_key" json:"id"`
 	Name string
 }
 
@@ -16,7 +14,7 @@ func (u *AdminsModel) TableName() string {
 
 // UsersCreate 创建用户
 //func UserCreate(u *UsersModel) (bool) {
-//	rows := models.DB.Create(u).RowsAffected
+//	rows := module.DB.Create(u).RowsAffected
 //	if (rows < 1) {
 //		return false
 //	}
