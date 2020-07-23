@@ -15,7 +15,7 @@ func SetAdmin(c *gin.Context) {
 	err := c.ShouldBind(&login)
 
 	if err != nil {
-		c.JSON(http.StatusOK, util.GetApiJsonErrResult( module.Translate(err)))
+		c.JSON(http.StatusOK, util.GetApiJsonErrResult(module.Translate(err)))
 		return
 	}
 
