@@ -66,6 +66,14 @@ func GetApiJsonResult(code string, message string, data interface{}) *ApiJsonRes
 		Message: message,
 	}
 }
+// 错误 json 返回
+func GetApiJsonErrResult(message string) *ApiJsonResult {
+	return GetApiJsonResult("200",message,"")
+}
+// 正确 json 返回
+func GetApiJsonSuccessResult(message string, data interface{}) *ApiJsonResult {
+	return GetApiJsonResult("200",message,data)
+}
 
 // GetApiJsonPagingResult 获取接口分页json返回值
 func GetApiJsonPagingResult(code string, message string, lists interface{}, totalCount, page int, pageSize int) *ApiJsonResult {

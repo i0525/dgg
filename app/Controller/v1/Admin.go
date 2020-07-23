@@ -2,16 +2,22 @@ package v1
 
 import (
 	"dgg/app/validate"
-
+	"dgg/module"
+	"dgg/util"
 	"github.com/gin-gonic/gin"
 	"net/http"
 )
 
 func SetAdmin(c *gin.Context) {
-	var form *validate.IndexRequest
-	if err := c.ShouldBind(&form); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+
+	var login validate.Login
+
+	err := c.ShouldBind(&login)
+
+	if err != nil {
+		c.JSON(http.StatusOK, util.GetApiJsonErrResult( module.Translate(err)))
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{"status": "you are logged in"})
+
+	c.JSON(http.StatusOK, util.GetApiJsonResult("200", "success", "处理成功"))
 }
