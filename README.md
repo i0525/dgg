@@ -1,4 +1,4 @@
-dgg 自用GO框架 v1.0.0
+dgg 自用GO框架
 ===============
 ## 安装
 
@@ -10,4 +10,16 @@ git clone https://github.com/lidonghe0525/dgg.git
 
 ~~~ 
 go get 
+~~~
+
+复制配置文件，并按需修改
+
+~~~ 
+cp .env.example .env
+~~~
+
+运行项目
+
+~~~ 
+go run main.go
 ~~~
